@@ -18,6 +18,11 @@
     color: rgb(224, 0, 0);
 }
 
+.logo a{
+    text-decoration: none;
+    color: rgb(224, 0, 0);
+}
+
 hr{
     border: solid;
 }
