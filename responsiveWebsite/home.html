@@ -9,15 +9,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+    <!-- website div that is displayed as a grid to organize the page -->
     <div class="website">
+        <!-- clickable costco logo -->
         <div class="logo">
             <a href="home.html"><img src="Images/costco.png" alt=""></a>
         </div>
 
+        <!-- searchbar -->
         <div class="searchbar">
             <input type="text" placeholder="Search.." size="">
         </div>
 
+        <!-- navbar -->
         <div class="navbar">
             <ul class="nav">
                 <li>
@@ -40,7 +44,10 @@
             <h1>Featured Items</h1>
         </div>
 
+        <!-- scrollbar of all the featured items and their information -->
+        <!-- this took unreasonably long to code -->
         <div class="images">
+            <!-- each img tag is one image -->
             <div class="img">
                 <img src="Images/christmasTree.jfif" alt="">
                 <div class="price">
@@ -49,6 +56,7 @@
                 <div class="title">
                     <a href="http://fakebsod.com/windows-8-and-10">Miniature Decorative Tree Model</a>
                 </div>
+                <!-- star rating -->
                 <div class="star">
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
@@ -157,15 +165,16 @@
         <div class="membership-title">
             <h2>Membership</h2>
         </div>
+        <!-- the grid div to display the exectuvie and gold card options/benefits -->
         <div class="membership-table">
+            <!-- executive grey box -->
             <div class="executive">
+                <!-- second div to group the content to add padding with the grey box -->
                 <div class="content">
                     <div class="img">
                         <img src="Images/executiveCard.webp" alt="">
                     </div>
-                    <div class="img-info">
-                        <p></p>
-                    </div>
+                    <!-- table of benefits and their icons from font awesome -->
                     <div class="table">
                         <p>Shop at Costco</p>
                         <span class="fa fa-check"></span>
@@ -188,6 +197,7 @@
                     </div>
                 </div>
             </div>
+            <!-- gold table -->
             <div class="gold">
                 <div class="content">
                     <div class="img">
@@ -216,8 +226,10 @@
                 </div>
             </div>
         </div>
+        <!-- signup form div -->
         <div class="signup">
             <h2>Join Costco Today!</h2>
+            <!-- the actual form -->
             <form action="">
                 <div class="name">
                     <label for="fname">Full Name:</label>
@@ -243,6 +255,7 @@
                     <label for="offering">Offering:</label>
                     <input type="text" id="offering" name="offering">
                 </div>
+                <!-- text area bc you need to add a long prayer (duh) -->
                 <div class="prayer">
                     <label for="prayer">Prayer:</label>
                     <textarea type="text" id="prayer" name="prayer" placeholder="Pray to the almighty lords and saviors of Costco..."></textarea>
@@ -250,7 +263,9 @@
                 <input type="submit" value="Submit">
             </form>
         </div>
+        <!-- footer -->
         <div class="footer">
+            <!-- top list of footer -->
             <ul class="top">
                 <li>
                     <a href="https://twitter.com/costcocanada"><span class="fa fa-twitter"></span></a>
@@ -265,10 +280,12 @@
                     <a href="contact.html">Contact Us</a>
                 </li>
             </ul>
+            <!-- bottom list of footer -->
             <ul class="bottom">
                 <p>Alan Gao &copy; 2022</p>
             </ul>
         </div>
     </div>
 </body>
+<!-- last tag -->
 </html>
