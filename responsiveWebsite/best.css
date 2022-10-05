@@ -80,7 +80,6 @@ hr{
     justify-content: center;
     align-items: center;
     margin: 20px;
-    min-height: 100vh;
 }
 
 .footer{
@@ -114,4 +113,54 @@ hr{
 .footer ul li a{
     color: white;
     text-decoration: none;
+}
+
+.content{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 10px;
+    grid-column: 1/5;
+    margin-bottom: 20px;
+    min-height: 100vh;
+}
+
+.table{
+    display: flex;
+    flex-direction: column;
+    border: 5px solid rgb(0, 93, 170);
+    padding: 5px;
+}
+
+.prayer{
+    display: flex;
+    flex-direction: column;
+    border: 5px solid rgb(0, 93, 170);
+    padding: 5px;
+}
+
+h1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    font-size: 50px;
+}
+
+p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    font-size: 20px;
+}
+
+.content a{
+    text-decoration: none;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.content a:hover{
+    box-shadow: 10px 10px 3px 10px rgb(207, 210, 241) inset;
 }

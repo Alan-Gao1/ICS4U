@@ -72,17 +72,6 @@ hr{
     min-width: 200px;
 }
 
-.construction{
-    grid-column: 1/4;
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 20px;
-    min-height: 100vh;
-}
-
 .footer{
     grid-column: 1/4;
     background-color: rgb(0, 93, 170);
@@ -114,4 +103,73 @@ hr{
 .footer ul li a{
     color: white;
     text-decoration: none;
+}
+
+.content{
+    grid-column: 1/4;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    margin: 10px;
+    min-height: 100vh;
+}
+
+.image img{
+    height: auto;
+    width: 100%;
+    padding: 10px;
+}
+
+.image{
+    display: flex;
+    flex-direction: column;
+}
+
+.image p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.about{
+    grid-column: 1/4;
+    font-size: 18px;
+}
+
+.about2 h1{
+    display: none;
+}
+
+.about2{
+    margin-top: 10px;
+    grid-column: 2/5;
+    font-size: 18px;
+}
+
+@media (max-width: 1150px){
+    .content{
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .about{
+        grid-column: 1/1;
+        font-size: 18px;
+    }
+    
+    .about2{
+        margin-top: 10px;
+        grid-column: 1/1;
+        font-size: 18px;
+    }
+
+    .about2 h1{
+        display: flex;
+    }
+
+    .image{
+        display: none;
+    }
 }
