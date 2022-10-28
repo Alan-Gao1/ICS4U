@@ -18,9 +18,13 @@ keypadNumbers.forEach(row => {
             }else if(toAdd != "="){
                 field.innerHTML += toAdd;
             }else{
-                try {
-                    field.innerHTML = eval(field.innerHTML);
-                } catch (error) {
+                if(field.innerHTML != ""){
+                    try {
+                        field.innerHTML = eval(field.innerHTML);
+                    } catch (error) {
+                        field.innerHTML = "ERROR";
+                    }
+                }else{
                     field.innerHTML = "ERROR";
                 }
             }
