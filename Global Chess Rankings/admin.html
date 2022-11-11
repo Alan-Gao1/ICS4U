@@ -19,7 +19,7 @@
     </nav>
     <div class="columns mt-1 m-0">
         <div class="field box column">
-            <strong class="is-size-5">Enter a Game</strong>
+            <strong class="is-size-5">Add a Game</strong>
             <input type="date" class="input is-rounded mb-2 mt-2" id="date">
             <input type="text" class="input is-rounded mb-2" id="white" placeholder="White Player Name">
             <input type="text" class="input is-rounded mb-2" id="black" placeholder="Black Player Name">
@@ -68,12 +68,42 @@
                 <button class="button is-primary">Submit</button>
             </div>
         </div>
-        <div class="box column">
+        <div class="field box column">
+            <strong class="is-size-5">Add a Player</strong>
+            <input type="text" class="input is-rounded mb-2 mt-2" id="pFirstName" placeholder="First Name">
+            <input type="text" class="input is-rounded mb-2" id="pLastName" placeholder="Last Name">
+            <input type="text" class="input is-rounded mb-2" id="classical" placeholder="Classical Rating">
+            <input type="text" class="input is-rounded mb-2" id="rapid" placeholder="Rapid Rating">
+            <input type="text" class="input is-rounded mb-2" id="blitz" placeholder="Blitx Rating">
+            <div class="control" onclick="addPlayer()">
+                <button class="button is-primary mt-1">Submit</button>
+            </div>
         </div>
     </div>
 </body>
 
 <script>
+    let tempData = JSON.parse(localStorage.getItem("data"));
+
+    function addPlayer(){
+        let firstName = document.querySelector('#pFirstName').value;
+        let lastName = document.querySelector('#pLastName').value;
+        let name = firstName.concat(" ", lastName);
+        let classical = document.querySelector('#classical').value;
+        let rapid = document.querySelector('#rapid').value;
+        let blitz = document.querySelector('#blitz').value;
+        let id = tempData[tempData.length -1].id;
+        tempData.push({
+            name: name,
+            id: id,
+            classicalRating: classical,
+            rapidRating: rapid,
+            blitzRating: blitz,
+            games: []
+        });
+        let playersString = JSON.stringify(tempData);
+        localStorage.setItem("data", playersString);
+    }
 </script>
 
 </html>
