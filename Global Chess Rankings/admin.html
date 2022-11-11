@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="chess.html" class="navbar-item">
+                <img src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpmeXx6V.png" alt="">
+            </a>
+        </div>
+        <a href="admin.html" class="navbar-item">Admin</a>
+        <a href="games.html" class="navbar-item">Games</a>
+    </nav>
+    <div class="columns mt-1 m-0">
+        <div class="field box column">
+            <strong class="is-size-5">Enter a Game</strong>
+            <input type="date" class="input is-rounded mb-2 mt-2" id="date">
+            <input type="text" class="input is-rounded mb-2" id="white" placeholder="White Player Name">
+            <input type="text" class="input is-rounded mb-2" id="black" placeholder="Black Player Name">
+            <strong>Who Won?</strong>
+            <div class="control mb-3">
+                <label class="radio">
+                    <input type="radio" name="answer" class="mr-1">White
+                </label>
+                <label class="radio">
+                    <input type="radio" name="answer" class="mr-1">Black
+                </label>
+                <label class="radio">
+                    <input type="radio" name="answer" class="mr-1">Stalemate
+                </label>
+            </div>
+            <label class="is-centered"><strong>Enter the Number of moves of each type:</strong></label>
+            <div class="columns">
+                <div class="column">
+                    <label>White:</label>
+                    <input type="text" class="input is-rounded mb-2 mt-2 is-small" id="brilliant" placeholder="Brilliant Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="great" placeholder="Great Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="best" placeholder="Best Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="excellent" placeholder="Excellent Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="good" placeholder="Good Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="book" placeholder="Book Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="inaccuracy" placeholder="Innacuracies">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="mistake" placeholder="Mistakes">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="blunder" placeholder="Blunders">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="missed" placeholder="Missed Wins">
+                </div>
+                <div class="column">
+                    <label>Black</label>
+                    <input type="text" class="input is-rounded mb-2 mt-2 is-small" id="brilliant" placeholder="Brilliant Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="great" placeholder="Great Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="best" placeholder="Best Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="excellent" placeholder="Excellent Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="good" placeholder="Good Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="book" placeholder="Book Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="inaccuracy" placeholder="Innacuracies">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="mistake" placeholder="Mistakes">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="blunder" placeholder="Blunders">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="missed" placeholder="Missed Wins">
+                </div>
+            </div>
+            <div class="control">
+                <button class="button is-primary">Submit</button>
+            </div>
+        </div>
+        <div class="box column">
+        </div>
+    </div>
+</body>
+
+<script>
+</script>
+
+</html>

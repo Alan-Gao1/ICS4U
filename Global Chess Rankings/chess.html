@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess standings</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        th{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="chess.html" class="navbar-item">
+                <img src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpmeXx6V.png" alt="">
+                Global Chess Rankings
+            </a>
+        </div>
+        <a href="admin.html" class="navbar-item">Admin</a>
+        <a href="games.html" class="navbar-item">Games</a>
+    </nav>
+    <div class="content">
+        <div class="table">
+            <table id = "standings" class="table is-striped is-bordered is-hoverable">
+                <thead>
+                    <tr>
+                        <th onclick="sort('classicalRating');">Rank</th>
+                        <th onclick="sort('name');">Name</th>
+                        <th onclick="sort('classicalRating');">Rating</th>
+                        <th onclick="sort('rapidRating');">Rapid</th>
+                        <th onclick="sort('blitzRating');">Blitz</th>
+                    </tr>
+                 </thead>
+                 <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+<script>
+    let players = [
+    {
+            name: "Magnus Carlsen",
+            id: "1",
+            rank: 1,
+            classicalRating: "2859",
+            rapidRating: "2834",
+            blitzRating: "2830",
+            games: []
+        },
+        {
+            name: "Ding Liren",
+            id: "2",
+            rank: 2,
+            classicalRating: "2811",
+            rapidRating: "2829",
+            blitzRating: "2788",
+            games: []
+        },
+        {
+            name: "Ian Nepomniachtchi",
+            id: "3",
+            rank: 3,
+            classicalRating: "2793",
+            rapidRating: "2766",
+            blitzRating: "2781",
+            games: []
+        },
+        {
+            name: "Alireza Firouzja ",
+            id: "4",
+            rank: 4,
+            classicalRating: "2785",
+            rapidRating: "2745",
+            blitzRating: "2903",
+            games: []
+        },
+        {
+            name: "Hikaru Nakamura",
+            id: "5",
+            rank: 5,
+            classicalRating: "2768",
+            rapidRating: "2806",
+            blitzRating: "2909",
+            games: []
+        },
+        {
+            name: "Fabiano Caruana",
+            id: "6",
+            rank: 6,
+            classicalRating: "2766",
+            rapidRating: "2747",
+            blitzRating: "2847",
+            games: []
+        },
+        {
+            name: "Anish Giri",
+            id: "7",
+            rank: 7,
+            classicalRating: "2764",
+            rapidRating: "2721",
+            blitzRating: "2792",
+            games: []
+        },
+        {
+            name: "Wesley So",
+            id: "8",
+            rank: 8,
+            classicalRating: "2760",
+            rapidRating: "2787",
+            blitzRating: "2763",
+            games: []
+        },
+        {
+            name: "Viswanathan Anand",
+            id: "9",
+            rank: 9,
+            classicalRating: "2754",
+            rapidRating: "2731",
+            blitzRating: "2734",
+            games: []
+        },
+        {
+            name: "Sergey Karjakin",
+            id: "10",
+            rank: 10,
+            classicalRating: "2747",
+            rapidRating: "2736",
+            blitzRating: "2647",
+            games: []
+        },
+        {
+            name: "Teimour Radjabov",
+            id: "11",
+            rank: 11,
+            classicalRating: "2747",
+            rapidRating: "2718",
+            blitzRating: "2709",
+            games: []
+        },
+        {
+            name: "Alexander Grischuk",
+            id: "12",
+            rank: 12,
+            classicalRating: "2745",
+            rapidRating: "2759",
+            blitzRating: "2847",
+            games: []
+        },
+        {
+            name: "Leinier Dominguez Perez",
+            id: "13",
+            rank: 13,
+            classicalRating: "2743",
+            rapidRating: "2703",
+            blitzRating: "2708",
+            games: []
+        },
+        {
+            name: "Shakhiyar Mamedyarov",
+            id: "14",
+            rank: 14,
+            classicalRating: "2741",
+            rapidRating: "2747",
+            blitzRating: "2734",
+            games: []
+        },
+        {
+            name: "Richard Rapport",
+            id: "15",
+            rank: 15,
+            classicalRating: "2740",
+            rapidRating: "2802",
+            blitzRating: "2613",
+            games: []
+        },
+        {
+            name: "Maxime Vachier-Lagrave",
+            id: "16",
+            rank: 16,
+            classicalRating: "2735",
+            rapidRating: "2775",
+            blitzRating: "2771",
+            games: []
+        },
+        {
+            name: "Levon Aronian",
+            id: "17",
+            rank: 17,
+            classicalRating: "2735",
+            rapidRating: "2720",
+            blitzRating: "2809",
+            games: []
+        },
+        {
+            name: "Jan-Krzysztof Duda",
+            id: "18",
+            rank: 18,
+            classicalRating: "2731",
+            rapidRating: "2791",
+            blitzRating: "2779",
+            games: []
+        },
+        {
+            name: "Vidit Santosh Gujrathi",
+            id: "19",
+            rank: 19,
+            classicalRating: "2729",
+            rapidRating: "2617",
+            blitzRating: "2654",
+            games: []
+        },
+        {
+            name: "Dmitry Andreikin",
+            id: "20",
+            rank: 20,
+            classicalRating: "2729",
+            rapidRating: "2634",
+            blitzRating: "2736",
+            games: []
+        },
+        {
+            name: "Veselin Topalov",
+            id: "21",
+            rank: 21,
+            classicalRating: "2728",
+            rapidRating: "2627",
+            blitzRating: "2667",
+            games: []
+        },
+        {
+            name: "Le Quang Liem",
+            id: "22",
+            rank: 22,
+            classicalRating: "2728",
+            rapidRating: "2661",
+            blitzRating: "2642",
+            games: []
+        },
+        {
+            name: "Nikita Vitiugov",
+            id: "23",
+            rank: 23,
+            classicalRating: "2726",
+            rapidRating: "2622",
+            blitzRating: "2673",
+            games: []
+        },
+    ];
+
+    let playersString = JSON.stringify(players);
+
+    localStorage.setItem("data", playersString);
+
+    let data = JSON.parse(localStorage.getItem("data"));
+
+    createTable(data);
+    sort('classicalRating')
+
+    function createTable(data){
+        let tableBody = document.querySelector('tbody');
+        data.forEach(player => {
+            const row = document.createElement('tr');
+            let cell = document.createElement('td');
+            let link = document.createElement('a');
+            cell = document.createElement('td');
+            cell.textContent = player.rank;
+            row.appendChild(cell);
+            cell = document.createElement('td');
+            link.href = 'players.html?id=' + player.id;
+            link.textContent = player.name;
+            cell.appendChild(link);
+            row.appendChild(cell);
+            cell = document.createElement('td');
+            cell.textContent = player.classicalRating;
+            row.appendChild(cell);
+            cell = document.createElement('td');
+            cell.textContent = player.rapidRating;
+            row.appendChild(cell);
+            cell = document.createElement('td');
+            cell.textContent = player.blitzRating;
+            row.appendChild(cell);
+            tableBody.appendChild(row);
+        });
+    }
+
+    function sort(prop){
+        let tableBody = document.querySelector('tbody');
+        tableBody.replaceChildren();
+        let store = "";
+        for(let j = 0; j<30; j++){
+            for(let i = 0; i<data.length-1; i++){
+            let currentElement = data[i];
+            let nextElement = data[i+1];
+            if(prop === 'name'){
+                if(currentElement[prop] > nextElement[prop]){
+                    store = currentElement;
+                    data[i] = data[i+1];
+                    data[i+1] = store;
+                }
+            }else if(currentElement[prop] < nextElement[prop]){
+                store = currentElement;
+                data[i] = data[i+1];
+                data[i+1] = store;
+            }
+        }
+        }
+        createTable(data);
+    }
+
+</script>
+
+</html>
