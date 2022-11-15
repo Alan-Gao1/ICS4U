@@ -18,13 +18,111 @@
     <nav class="navbar">
         <div class="navbar-brand">
             <a href="chess.html" class="navbar-item">
-                <img src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpmeXx6V.png"
-                    alt="">
+                <img src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpmeXx6V.png" alt="" class="mr-2">
+                Global Chess Rankings
             </a>
         </div>
         <a href="admin.html" class="navbar-item">Admin</a>
         <a href="games.html" class="navbar-item">Games</a>
     </nav>
+    <div class="content">
+        <div class="table">
+            <table id = "games" class="table is-striped is-bordered is-hoverable">
+                <thead>
+                    <tr>
+                        <th onclick="">Date</th>
+                        <th onclick="">White Player</th>
+                        <th onclick="">Black Player</th>
+                        <th onclick="">Result</th>
+                        <th onclick="">Type</th>
+                    </tr>
+                </thead>
+                <tbody id="body"></tbody>
+            </table>
+        </div>
+    </div>
+        
 </body>
+
+<script>
+    let data = JSON.parse(localStorage.getItem("data"));
+    let tempSeen = JSON.parse(localStorage.getItem("seen"))
+
+    createTable()
+
+    function addLink(thisGame, nameString, link){
+        data.forEach(player =>{
+            if(player.name === nameString){
+                link.href = 'players.html?id=' + player.id;
+                link.textContent = player.name
+            }
+        })
+    }
+
+    function createTable(){
+        let tableBody = document.querySelector('tbody')
+        let addedID = ["0"]
+        data.forEach(player => {
+            if(player.games.length > 0){
+                for(let i = 0; i<player.games.length; i++){
+                    let thisGame = player.games[i]
+                    let flag = false;
+                    for(let i = 0; i<addedID.length; i++){
+                        if(addedID[i] === thisGame.id){
+                            flag = true;
+                        }
+                    }
+                    if(!flag){
+                        const row = document.createElement('tr');
+                        let cell = document.createElement('td');
+                        let link = document.createElement('a');
+
+                        cell.textContent = thisGame.date;
+                        row.appendChild(cell)
+
+                        cell = document.createElement('td');
+                        addLink(thisGame, thisGame.white, link)
+                        cell.appendChild(link);
+                        row.appendChild(cell);
+
+                        cell = document.createElement('td');
+                        link = document.createElement('a');
+                        addLink(thisGame, thisGame.black, link)
+                        cell.appendChild(link)
+                        row.appendChild(cell);
+
+                        cell = document.createElement('td');
+                        let winDisplay = ""
+                        if(thisGame.winner == "1"){
+                            winDisplay = "Won by White";
+                        }else if(thisGame.winner == "0"){
+                            winDisplay = "Won by Black";
+                        }else if(thisGame.winner == "-1"){
+                            winDisplay = "Stalemate"
+                        }
+                        cell.textContent = winDisplay;
+                        row.appendChild(cell);
+                        
+                        cell = document.createElement('td');
+                        let typeDisplay = ""
+                        if(thisGame.type == "classical"){
+                            typeDisplay = "Classical"
+                        }else if(thisGame.type == "rapid"){
+                            typeDisplay = "Rapid"
+                        }else if(thisGame.type == "blitz"){
+                            typeDisplay = "Blitz"
+                        }
+                        cell.textContent = typeDisplay;
+                        row.appendChild(cell);
+
+
+                        tableBody.appendChild(row);
+                        addedID.unshift(thisGame.id)
+                    }
+                }
+            }
+        });
+    }
+</script>
 
 </html>

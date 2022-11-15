@@ -11,7 +11,8 @@
     <nav class="navbar">
         <div class="navbar-brand">
             <a href="chess.html" class="navbar-item">
-                <img src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpmeXx6V.png" alt="">
+                <img src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpmeXx6V.png" alt="" class="mr-2">
+                Global Chess Rankings
             </a>
         </div>
         <a href="admin.html" class="navbar-item">Admin</a>
@@ -21,50 +22,60 @@
         <div class="field box column">
             <strong class="is-size-5">Add a Game</strong>
             <input type="date" class="input is-rounded mb-2 mt-2" id="date">
-            <input type="text" class="input is-rounded mb-2" id="white" placeholder="White Player Name">
-            <input type="text" class="input is-rounded mb-2" id="black" placeholder="Black Player Name">
+            <input type="text" class="input is-rounded mb-2" id="whitePlayer" placeholder="White Player Name">
+            <input type="text" class="input is-rounded mb-2" id="blackPlayer" placeholder="Black Player Name">
             <strong>Who Won?</strong>
             <div class="control mb-3">
                 <label class="radio">
-                    <input type="radio" name="answer" class="mr-1">White
+                    <input type="radio" name="answer" class="mr-1" id="whiteWin">White
                 </label>
                 <label class="radio">
-                    <input type="radio" name="answer" class="mr-1">Black
+                    <input type="radio" name="answer" class="mr-1" id="blackWin">Black
                 </label>
                 <label class="radio">
-                    <input type="radio" name="answer" class="mr-1">Stalemate
+                    <input type="radio" name="answer" class="mr-1" id="stalemate">Stalemate
                 </label>
             </div>
+            <strong>Type of Game?</strong>
+            <br>
+            <div class="select mb-1 mt-2">
+                <select id="type">
+                    <option value="classicalType">Classical Game</option>
+                    <option value="rapidType">Rapid Game</option>
+                    <option value="blitzType">Blitz Game</option>
+                </select>
+            </div>
+            <br>
             <label class="is-centered"><strong>Enter the Number of moves of each type:</strong></label>
             <div class="columns">
                 <div class="column">
                     <label>White:</label>
-                    <input type="text" class="input is-rounded mb-2 mt-2 is-small" id="brilliant" placeholder="Brilliant Moves">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="great" placeholder="Great Moves">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="best" placeholder="Best Moves">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="excellent" placeholder="Excellent Moves">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="good" placeholder="Good Moves">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="book" placeholder="Book Moves">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="inaccuracy" placeholder="Innacuracies">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="mistake" placeholder="Mistakes">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="blunder" placeholder="Blunders">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="missed" placeholder="Missed Wins">
+                    <input type="text" class="input is-rounded mb-2 mt-2 is-small" id="brilliantW" placeholder="Brilliant Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="greatW" placeholder="Great Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="bestW" placeholder="Best Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="excellentW" placeholder="Excellent Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="goodW" placeholder="Good Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="bookW" placeholder="Book Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="inaccuracyW" placeholder="Innacuracies">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="mistakeW" placeholder="Mistakes">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="blunderW" placeholder="Blunders">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="missedW" placeholder="Missed Wins">
                 </div>
                 <div class="column">
                     <label>Black</label>
-                    <input type="text" class="input is-rounded mb-2 mt-2 is-small" id="brilliant" placeholder="Brilliant Moves">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="great" placeholder="Great Moves">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="best" placeholder="Best Moves">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="excellent" placeholder="Excellent Moves">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="good" placeholder="Good Moves">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="book" placeholder="Book Moves">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="inaccuracy" placeholder="Innacuracies">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="mistake" placeholder="Mistakes">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="blunder" placeholder="Blunders">
-                    <input type="text" class="input is-rounded mb-2 is-small" id="missed" placeholder="Missed Wins">
+                    <input type="text" class="input is-rounded mb-2 mt-2 is-small" id="brilliantB" placeholder="Brilliant Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="greatB" placeholder="Great Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="bestB" placeholder="Best Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="excellentB" placeholder="Excellent Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="goodB" placeholder="Good Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="bookB" placeholder="Book Moves">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="inaccuracyB" placeholder="Innacuracies">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="mistakeB" placeholder="Mistakes">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="blunderB" placeholder="Blunders">
+                    <input type="text" class="input is-rounded mb-2 is-small" id="missedB" placeholder="Missed Wins">
                 </div>
             </div>
-            <div class="control">
+            <div class="control" onclick="addGame()">
                 <button class="button is-primary">Submit</button>
             </div>
         </div>
@@ -84,6 +95,7 @@
 
 <script>
     let tempData = JSON.parse(localStorage.getItem("data"));
+    let tempSeen = JSON.parse(localStorage.getItem("seen"))
 
     function addPlayer(){
         let firstName = document.querySelector('#pFirstName').value;
@@ -93,9 +105,12 @@
         let rapid = document.querySelector('#rapid').value;
         let blitz = document.querySelector('#blitz').value;
         let id = tempData[tempData.length -1].id;
+        parseInt(id)
+        id++;
+        let finID = id.toString();
         tempData.push({
             name: name,
-            id: id,
+            id: finID,
             classicalRating: classical,
             rapidRating: rapid,
             blitzRating: blitz,
@@ -103,6 +118,126 @@
         });
         let playersString = JSON.stringify(tempData);
         localStorage.setItem("data", playersString);
+    }
+
+    function addGame(){
+        let date = document.getElementById('date')
+        let dateValue = date.value;
+        let whitePlayer = document.getElementById('whitePlayer').value
+        let blackPlayer = document.getElementById('blackPlayer').value
+        let winner = ""
+        if(document.getElementById('whiteWin').checked){
+            winner = "1"
+        }else if(document.getElementById('blackWin').checked){
+            winner = "0"
+        }else if(document.getElementById('stalemate').checked){
+            winner = "-1"
+        }
+
+        let type = document.getElementById('type')
+        let selectedValue = type.options[type.selectedIndex].value
+        let gameType = "";
+        if(selectedValue === "classicalType"){
+            gameType = "classical"
+        }else if(selectedValue === "rapidType"){
+            gameType = "rapid"
+        }else if(selectedValue === "blitzType"){
+            gameType = "blitz"
+        }
+
+        let brilliantW = document.getElementById('brilliantW').value
+        let greatW = document.getElementById('greatW').value
+        let bestW = document.getElementById('bestW').value
+        let excellentW = document.getElementById('excellentW').value
+        let goodW = document.getElementById('goodW').value
+        let bookW = document.getElementById('bookW').value
+        let inaccuracyW = document.getElementById('inaccuracyW').value
+        let mistakeW = document.getElementById('mistakeW').value
+        let blunderW = document.getElementById('blunderW').value
+        let missedW = document.getElementById('missedW').value
+
+        let brilliantB = document.getElementById('brilliantB').value
+        let greatB = document.getElementById('greatB').value
+        let bestB = document.getElementById('bestB').value
+        let excellentB = document.getElementById('excellentB').value
+        let goodB = document.getElementById('goodB').value
+        let bookB = document.getElementById('bookB').value
+        let inaccuracyB = document.getElementById('inaccuracyB').value
+        let mistakeB = document.getElementById('mistakeB').value
+        let blunderB = document.getElementById('blunderB').value
+        let missedB = document.getElementById('missedB').value
+
+        let additive = parseInt(tempSeen[0])
+        let numID = additive+1
+        let gameID = numID.toString()
+        tempSeen.unshift(gameID);
+
+        tempData.forEach(element => {
+            if(whitePlayer === element.name){
+                element.games.push({
+                    date: dateValue,
+                    white: whitePlayer,
+                    black: blackPlayer,
+                    winner: winner,
+                    brilliantW: brilliantW,
+                    greatW: greatW,
+                    bestW: bestW,
+                    excellentW: excellentW,
+                    goodW: goodW,
+                    bookW: bookW,
+                    inaccuracyW: inaccuracyW,
+                    mistakeW: mistakeW,
+                    blunderW: blunderW,
+                    missedW: missedW,
+                    brilliantB: brilliantB,
+                    greatB: greatB,
+                    bestB: bestB,
+                    excellentB: excellentB,
+                    goodB: goodB,
+                    bookB: bookB,
+                    inaccuracyB: inaccuracyB,
+                    mistakeB: mistakeB,
+                    blunderB: blunderB,
+                    missedB: missedB,
+                    type: gameType,
+                    id: gameID
+                })
+            }else if(blackPlayer === element.name){
+                element.games.push({
+                    date: dateValue,
+                    white: whitePlayer,
+                    black: blackPlayer,
+                    winner: winner,
+                    brilliantW: brilliantW,
+                    greatW: greatW,
+                    bestW: bestW,
+                    excellentW: excellentW,
+                    goodW: goodW,
+                    bookW: bookW,
+                    inaccuracyW: inaccuracyW,
+                    mistakeW: mistakeW,
+                    blunderW: blunderW,
+                    missedW: missedW,
+                    brilliantB: brilliantB,
+                    greatB: greatB,
+                    bestB: bestB,
+                    excellentB: excellentB,
+                    goodB: goodB,
+                    bookB: bookB,
+                    inaccuracyB: inaccuracyB,
+                    mistakeB: mistakeB,
+                    blunderB: blunderB,
+                    missedB: missedB,
+                    type: gameType,
+                    id: gameID
+                })
+            }
+        });
+        let playersString = JSON.stringify(tempData);
+        localStorage.setItem("data", playersString);
+
+        let seenString = JSON.stringify(tempSeen)
+        localStorage.setItem("seen", seenString)
     }
 </script>
 

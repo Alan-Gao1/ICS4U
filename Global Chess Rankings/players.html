@@ -11,23 +11,76 @@
     <nav class="navbar">
         <div class="navbar-brand">
             <a href="chess.html" class="navbar-item">
-                <img src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpmeXx6V.png" alt="">
+                <img src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpmeXx6V.png" alt="" class="mr-2">
+                Global Chess Rankings
             </a>
         </div>
         <a href="admin.html" class="navbar-item">Admin</a>
         <a href="games.html" class="navbar-item">Games</a>
     </nav>
-    <div id="test"></div>
+    <div class="columns">
+        <div class="column is-one-quarter has-text-centered" id = "playerIdentification">
+            <h3 class="title is-4" id = "playerIdentificationInside"></h3>
+            <p class="subtitle is-6" id = "playerSubtitle"></p>
+        </div>
+        <div class="column is-three-quarters" id = "levelDiv">
+            <nav class="level" id = "level">
+                <div class="level-item has-text-centered" id = "classical">
+                    <div id = "classicalInside">
+                        <p class="heading" id="classicalHeading">Classical Rating</p>
+                        <p class="title" id="classicalTitle"></p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered" id = "rapid">
+                    <div id = "rapidInside">
+                        <p class="heading" id="rapidHeading">Rapid Rating</p>
+                        <p class="title" id="rapidTitle"></p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered" id = "blitz">
+                    <div id = "blitzInside">
+                        <p class="heading" id="blitzHeading">Blitz Rating</p>
+                        <p class="title" id="blitzTitle"></p>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
 </body>
 <script>
     function start() {
-       const dataString = localStorage.getItem('data');
-       const data = JSON.parse(dataString);
-       let params = (new URL(document.location)).searchParams;
- 
-       const team = data.filter(team => team.id == params.get('id'));
- 
-       document.querySelector('#test div').textContent = team[0].Name;
+        const dataString = localStorage.getItem('data');
+        const data = JSON.parse(dataString);
+        let params = (new URL(document.location)).searchParams;
+        const playerPre = data.filter(player => player.id == params.get('id'));
+        const player = playerPre[0]
+        console.log(player)
+
+        playerIdentificationInside.innerText = player.name
+        let classification = "";
+        if(parseInt(player.classicalRating) > 2700){
+            classification = "Super Grandmaster"
+        }else if(parseInt(player.classicalRating) > 2500){
+            classification = "Grandmaster"
+        }else if(parseInt(player.classicalRating) > 2400){
+            classification = "International Master"
+        }else if(parseInt(player.classicalRating) > 2300){
+            classification = "Master"
+        }else if(parseInt(player.classicalRating) > 2000){
+            classification = "Candidate Master"
+        }else if(parseInt(player.classicalRating) > 1500){
+            classification = "Experienced Player"
+        }else if(parseInt(player.classicalRating) > 1000){
+            classification = "Intermediate Player"
+        }else if(parseInt(player.classicalRating) > 500){
+            classification = "Beginner Player"
+        }else if(parseInt(player.classicalRating) > 0){
+            classification = "Starter Player"
+        }
+        playerSubtitle.innerText = classification
+        classicalTitle.innerText = player.classicalRating
+        rapidTitle.innerText = player.rapidRating
+        blitzTitle.innerText = player.blitzRating
     }
 </script>
 </html>
