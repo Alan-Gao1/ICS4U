@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chess standings</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/0cdc30ac09.js" crossorigin="anonymous"></script>
     <style>
         th{
             cursor: pointer;
@@ -13,33 +14,72 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
+    <nav class="navbar has-shadow">
         <div class="navbar-brand">
-            <a href="chess.html" class="navbar-item">
-                <img src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpmeXx6V.png" alt="" class="mr-2">
+            <figure class="image is-64x64 m-1 ml-2 mb-2">
+                <a href="chess.html">
+                    <img src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpmeXx6V.png" alt="">
+                </a>
+            </figure>
+            <a href="chess.html" class="navbar-item is-size-4 pl-0">
                 Global Chess Rankings
             </a>
         </div>
-        <a href="admin.html" class="navbar-item">Admin</a>
-        <a href="games.html" class="navbar-item">Games</a>
+        <a href="admin.html" class="navbar-item is-size-4">Admin</a>
+        <a href="games.html" class="navbar-item is-size-4">Games</a>
     </nav>
-    <div class="content">
-        <div class="table">
-            <table id = "standings" class="table is-striped is-bordered is-hoverable">
-                <thead>
-                    <tr>
-                        <th onclick="sort('classicalRating');">Rank</th>
-                        <th onclick="sort('name');">Name</th>
-                        <th onclick="sort('classicalRating');">Rating</th>
-                        <th onclick="sort('rapidRating');">Rapid</th>
-                        <th onclick="sort('blitzRating');">Blitz</th>
-                    </tr>
-                 </thead>
-                 <tbody></tbody>
-            </table>
+    <div class="box m-3">
+        <p class="is-size-5 mb-2">2022 FIDE Chess World Championships</p>
+        <div class="columns">
+            <div class="column">
+                <figure class="image is-16by9">
+                    <iframe class="has-ratio" src="https://www.youtube.com/embed/UTHhy4s1cuo" title="2022 FIDE World Team Championship | FINAL |" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </figure>
+            </div>
+            <div class="column">
+                <figure class="image is-16by9">
+                    <iframe class = "has-ratio" src="https://www.youtube.com/embed/LurvRqlI4nw" title="2022 FIDE World Team Championship | Semifinals |" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </figure>
+            </div>
         </div>
     </div>
-    <div class="pagination ml-3">
+    <div class="content m-3 pl-0">
+        <p class="is-size-5 mb-2 ml-2">
+            <strong>Chess Rankings</strong>
+        </p>
+        <div class="section p-1 pl-0 ml-1">
+            <div class="table">
+                <table id = "standings" class="table is-striped is-bordered is-hoverable">
+                    <thead>
+                        <tr>
+                            <th onclick="sort('rank', rankSort);">
+                                Rank 
+                                <i id="rank" class=""></i>
+                            </th>
+                            <th onclick="sort('name', nameSort);">
+                                Name 
+                                <i id="name" class=""></i>
+                            </th>
+                            <th onclick="sort('classicalRating', classicalSort);">
+                                Classical Rating 
+                                <i id="class" class=""></i>
+                            </th>
+                            <th onclick="sort('rapidRating', rapidSort);">
+                                Rapid Rating 
+                                <i id="rapid" class=""></i>
+                            </th>
+                            <th onclick="sort('blitzRating', blitzSort);">
+                                Blitz Rating 
+                                <i id="blitz" class=""></i>
+                            </th>
+                        </tr>
+                     </thead>
+                     <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="pagination ml-4 mt-2">
         <nav class="pagination is-rounded" role="navigation">
             <a class="pagination-previous" onclick="paginate(-10)">Previous</a>
             <a class="pagination-next" onclick="paginate(10)">Next page</a>
@@ -234,9 +274,15 @@
         seen = JSON.parse(localStorage.getItem("seen"));
     }
 
+    let rankSort = "descending"
+    let classicalSort = "descending";
+    let rapidSort = "descending"
+    let blitzSort = "descending"
+    let nameSort = "descending"
+
     let page = 10;
 
-    sort('classicalRating')
+    sort('rank', rankSort)
 
     function paginate(num){
         page += num
@@ -257,9 +303,9 @@
             const row = document.createElement('tr');
             let cell = document.createElement('td');
             let link = document.createElement('a');
-            cell = document.createElement('td');
-            cell.textContent = j+1;
-            row.appendChild(cell);
+            cellRank = document.createElement('td');
+            cellRank.textContent = j+1;
+            row.appendChild(cellRank);
             
             cell = document.createElement('td');
             link.href = 'players.html?id=' + data[j].id;
@@ -279,25 +325,91 @@
         }
     }
 
-    function sort(prop){
+    function sort(prop, sort){
+        let iconRank = document.getElementById("rank")
+        let iconName = document.getElementById("name")
+        let iconClass = document.getElementById("class")
+        let iconRapid = document.getElementById("rapid")
+        let iconBlitz = document.getElementById("blitz")
+        iconRank.setAttribute('class', "")
+        iconName.setAttribute('class', "")
+        iconClass.setAttribute('class', "")
+        iconRapid.setAttribute('class', "")
+        iconBlitz.setAttribute('class', "")
+
         let tableBody = document.querySelector('tbody');
+        let rankFlag = false
+        if(prop === "rank"){
+            prop = "classicalRating"
+            rankFlag = true
+        }
         tableBody.replaceChildren();
         let store = "";
-        for(let j = 0; j<data.length+5; j++){
-            for(let i = 0; i<data.length-1; i++){
-                let currentElement = data[i];
-                let nextElement = data[i+1];
-                if(prop === 'name'){
-                    if(currentElement[prop] > nextElement[prop]){
+        if(sort === "descending"){
+            for(let j = 0; j<data.length+5; j++){
+                for(let i = 0; i<data.length-1; i++){
+                    let currentElement = data[i];
+                    let nextElement = data[i+1];
+                    if(prop === 'name'){
+                        iconName.setAttribute('class', "fa-solid fa-chevron-down")
+                        if(currentElement[prop] > nextElement[prop]){
+                            store = currentElement;
+                            data[i] = data[i+1];
+                            data[i+1] = store;
+                        }
+                        nameSort = "ascending"
+                    }else if(parseInt(currentElement[prop]) < parseInt(nextElement[prop])){
                         store = currentElement;
                         data[i] = data[i+1];
                         data[i+1] = store;
                     }
-                }else if(currentElement[prop] < nextElement[prop]){
-                    store = currentElement;
-                    data[i] = data[i+1];
-                    data[i+1] = store;
                 }
+            }
+            if(prop === "classicalRating" && !rankFlag){
+                iconClass.setAttribute('class', "fa-solid fa-chevron-down")
+                classicalSort = "ascending"
+            }else if(prop === "rapidRating" && !rankFlag){
+                iconRapid.setAttribute('class', "fa-solid fa-chevron-down")
+                rapidSort = "ascending"
+            }else if(prop === "blitzRating" && !rankFlag){
+                iconBlitz.setAttribute('class', "fa-solid fa-chevron-down")
+                blitzSort = "ascending"
+            }else if(prop === "classicalRating" && rankFlag){
+                iconRank.setAttribute('class', "fa-solid fa-chevron-down")
+                rankSort = "ascending"
+            }
+        }else if(sort === "ascending"){
+            for(let j = 0; j<data.length+5; j++){
+                for(let i = 0; i<data.length-1; i++){
+                    let currentElement = data[i]
+                    let nextElement = data[i+1];
+                    if(prop === 'name'){
+                        iconName.setAttribute('class', "fa-solid fa-chevron-up")
+                        if(currentElement[prop] < nextElement[prop]){
+                            store = currentElement;
+                            data[i] = data[i+1];
+                            data[i+1] = store;
+                        }
+                        nameSort = "descending"
+                    }else if(parseInt(currentElement[prop]) > parseInt(nextElement[prop])){
+                        store = currentElement;
+                        data[i] = data[i+1];
+                        data[i+1] = store;
+                    }
+                }
+            }
+            if(prop === "classicalRating" && !rankFlag){
+                iconClass.setAttribute('class', "fa-solid fa-chevron-up")
+                classicalSort = "descending"
+            }else if(prop === "rapidRating" && !rankFlag){
+                iconRapid.setAttribute('class', "fa-solid fa-chevron-up")
+                rapidSort = "descending"
+            }else if(prop === "blitzRating" && !rankFlag){
+                iconBlitz.setAttribute('class', "fa-solid fa-chevron-up")
+                blitzSort = "descending"
+            }else if(prop === "classicalRating" && rankFlag){
+                iconRank.setAttribute('class', "fa-solid fa-chevron-up")
+                rankSort = "descending"
             }
         }
         createTable(data);

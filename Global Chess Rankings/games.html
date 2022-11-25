@@ -15,33 +15,75 @@
 </head>
 
 <body>
-    <nav class="navbar">
+    <nav class="navbar has-shadow">
         <div class="navbar-brand">
-            <a href="chess.html" class="navbar-item">
-                <img src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpmeXx6V.png" alt="" class="mr-2">
+            <figure class="image is-64x64 m-1 ml-2 mb-2">
+                <a href="chess.html">
+                    <img src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpmeXx6V.png" alt="">
+                </a>
+            </figure>
+            <a href="chess.html" class="navbar-item is-size-4 pl-0">
                 Global Chess Rankings
             </a>
         </div>
-        <a href="admin.html" class="navbar-item">Admin</a>
-        <a href="games.html" class="navbar-item">Games</a>
+        <a href="admin.html" class="navbar-item is-size-4">Admin</a>
+        <a href="games.html" class="navbar-item is-size-4">Games</a>
     </nav>
-    <div class="content">
-        <div class="table">
-            <table id = "games" class="table is-striped is-bordered is-hoverable">
-                <thead>
-                    <tr>
-                        <th onclick="">Date</th>
-                        <th onclick="">White Player</th>
-                        <th onclick="">Black Player</th>
-                        <th onclick="">Result</th>
-                        <th onclick="">Type</th>
-                    </tr>
-                </thead>
-                <tbody id="body"></tbody>
-            </table>
+    <div class="columns mr-2 mt-1">
+        <div class="column is-three-fifths">
+            <div class="content">
+                <div class="section p-1 pl-4 ml-1">
+                    <div class="columns m-0">
+                        <div id="column" class="is-one-third">
+                            <h6 class="mb-1"><strong>Filter by Date:</strong></h6>
+                            <div class="columns m-0">
+                                <div class="column m-0 p-0">
+                                    <p class="mb-1">From:</p>
+                                    <input type="date" class="input is-rounded mb-2 is-small" id="dateFrom">
+                                </div>
+                                <div class="column m-0 p-0 ml-2">
+                                    <p class="mb-1">To:</p>
+                                    <input type="date" class="input is-rounded mb-2 is-small" id="dateTo">
+                                </div>
+                                <div class="is-flex is-justify-content-center is-align-items-center mt-4 ml-4">
+                                    <button class="button is-primary is-small is-rounded" onclick="dateFilter()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section p-0">
+                        <table id = "games" class="table is-striped is-bordered is-hoverable mt-2">
+                            <thead>
+                                <tr>
+                                    <th onclick="">Date</th>
+                                    <th onclick="">White Player</th>
+                                    <th onclick="">Black Player</th>
+                                    <th onclick="">Result</th>
+                                    <th onclick="">Type</th>
+                                </tr>
+                            </thead>
+                            <tbody id="body"></tbody>
+                        </table>
+                    </div>
+                    <div class="notification is-danger is-light is-hidden mt-4" id="invalid">
+                        There are no games within that date range to display
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-two-fifths">
+            <p class="is-size-5 mb-2"><strong>FIDE 2022 Qualifying Livestreams</strong></p>
+            <figure class="image is-16by9 mt-1 mb-1">
+                <iframe class="has-ratio" src="https://www.youtube.com/embed/0-plOCy-jaM" title="2022 FIDE World Team Championship | Pools - Round 1 & 2 |" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </figure>
+            <figure class="image is-16by9 mt-1 mb-1">
+                <iframe class="has-ratio" src="https://www.youtube.com/embed/_4MDJmy-3Ck" title="2022 FIDE World Team Championship | Pools - Round 3 & 4 |" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </figure>
+            <figure class="image is-16by9 mt-1 mb-1">
+                <iframe class="has-ratio" src="https://www.youtube.com/embed/be75bgmczPM" title="2022 FIDE World Team Championship | Pools - Round 5 |" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </figure>
         </div>
     </div>
-        
 </body>
 
 <script>
@@ -123,6 +165,92 @@
             }
         });
     }
+
+    function dateFilter(){
+        let dateFromUN = document.getElementById('dateFrom').value
+        let dateToUN = document.getElementById('dateTo').value
+
+        let dateFromSlash = dateFromUN.substring(0,4) + "/" + dateFromUN.substring(5,7) + "/" + dateFromUN.substring(8)
+        let dateToSlash = dateToUN.substring(0,4) + "/" + dateToUN.substring(5,7) + "/" + dateToUN.substring(8)
+        
+
+        let dateFrom = new Date(dateFromSlash)
+        let dateTo = new Date(dateToSlash)
+        
+        let tableBody = document.getElementById('body')
+        let addedID = ["0"]
+
+        tableBody.replaceChildren();
+
+        data.forEach(player => {
+            if(player.games.length > 0){
+                player.games.forEach(thisGame => {
+                    let currentDateSlash = thisGame.date.substring(0,4) + "/" + thisGame.date.substring(5,7) + "/" + thisGame.date.substring(8)
+                    let currentDate = new Date(currentDateSlash)
+                    if(currentDate>=dateFrom){
+                        if(currentDate<=dateTo){
+                            let flag = false;
+                            for(let i = 0; i<addedID.length; i++){
+                                if(addedID[i] === thisGame.id){
+                                    flag = true;
+                                }
+                            }
+                            if(!flag){
+                                const row = document.createElement('tr');
+                                let cell = document.createElement('td');
+                                let link = document.createElement('a');
+
+                                cell.textContent = thisGame.date;
+                                row.appendChild(cell)
+
+                                cell = document.createElement('td');
+                                addLink(thisGame, thisGame.white, link)
+                                cell.appendChild(link);
+                                row.appendChild(cell);
+
+                                cell = document.createElement('td');
+                                link = document.createElement('a');
+                                addLink(thisGame, thisGame.black, link)
+                                cell.appendChild(link)
+                                row.appendChild(cell);
+
+                                cell = document.createElement('td');
+                                let winDisplay = ""
+                                if(thisGame.winner == "1"){
+                                    winDisplay = "Won by White";
+                                }else if(thisGame.winner == "0"){
+                                    winDisplay = "Won by Black";
+                                }else if(thisGame.winner == "-1"){
+                                    winDisplay = "Stalemate"
+                                }
+                                cell.textContent = winDisplay;
+                                row.appendChild(cell);
+                                
+                                cell = document.createElement('td');
+                                let typeDisplay = ""
+                                if(thisGame.type == "classical"){
+                                    typeDisplay = "Classical"
+                                }else if(thisGame.type == "rapid"){
+                                    typeDisplay = "Rapid"
+                                }else if(thisGame.type == "blitz"){
+                                    typeDisplay = "Blitz"
+                                }
+                                cell.textContent = typeDisplay;
+                                row.appendChild(cell);
+                                tableBody.appendChild(row);
+                                addedID.unshift(thisGame.id)
+                            }
+                        }
+                    }
+                })
+            }
+        });
+        if(tableBody.childElementCount == 0){
+            let notif = document.getElementById("invalid")
+            notif.classList.remove("is-hidden")
+        }
+    }
+
 </script>
 
 </html>
