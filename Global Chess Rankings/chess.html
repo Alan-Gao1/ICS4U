@@ -7,11 +7,7 @@
     <title>Chess standings</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <script src="https://kit.fontawesome.com/0cdc30ac09.js" crossorigin="anonymous"></script>
-    <style>
-        th{
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="chess.css">
 </head>
 <body>
     <nav class="navbar has-shadow">
@@ -33,12 +29,12 @@
         <div class="columns">
             <div class="column">
                 <figure class="image is-16by9">
-                    <iframe class="has-ratio" src="https://www.youtube.com/embed/UTHhy4s1cuo" title="2022 FIDE World Team Championship | FINAL |" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe class="has-ratio" src="https://www.youtube.com/embed/UTHhy4s1cuo" title="2022 FIDE World Team Championship | FINAL |"></iframe>
                 </figure>
             </div>
             <div class="column">
                 <figure class="image is-16by9">
-                    <iframe class = "has-ratio" src="https://www.youtube.com/embed/LurvRqlI4nw" title="2022 FIDE World Team Championship | Semifinals |" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe class = "has-ratio" src="https://www.youtube.com/embed/LurvRqlI4nw" title="2022 FIDE World Team Championship | Semifinals |"></iframe>
                 </figure>
             </div>
         </div>
@@ -51,7 +47,7 @@
             <div class="table">
                 <table id = "standings" class="table is-striped is-bordered is-hoverable">
                     <thead>
-                        <tr>
+                        <tr id="firstRow">
                             <th onclick="sort('rank', rankSort);">
                                 Rank 
                                 <i id="rank" class=""></i>
@@ -79,342 +75,48 @@
             </div>
         </div>
     </div>
-    <div class="pagination ml-4 mt-2">
-        <nav class="pagination is-rounded" role="navigation">
-            <a class="pagination-previous" onclick="paginate(-10)">Previous</a>
-            <a class="pagination-next" onclick="paginate(10)">Next page</a>
-        </nav>
+    <div class="is-flex is-align-items-center is-flex-direction-column">
+        <div class="pagination ml-4 mt-1 mb-3 is-flex is-justify-content-start">
+            <div>
+                <nav class="pagination" role="navigation">
+                    <ul class="pagination-list">
+                        <li>
+                            <a class="pagination-previous" onclick="paginate(-10)"><</a>
+                        </li>
+                        <li>
+                            <a class="pagination-link" onclick="setPaginate('10')">1</a>
+                        </li>
+                        <li>
+                            <span class="pagination-ellipsis" id="leftDot">&hellip;</span>
+                        </li>
+                        <li>
+                            <a class="pagination-link" id="oneBefore"></a>
+                        </li>
+                        <li>
+                            <a class="pagination-link" id="current"></a>
+                        </li>
+                        <li>
+                            <a class="pagination-link" id="oneAfter"></a>
+                        </li>
+                        <li>
+                            <span class="pagination-ellipsis" id="rightDot">&hellip;</span>
+                        </li>
+                        <li>
+                            <a class="pagination-link" id="lastButton"></a>
+                        </li>
+                        <li>
+                            <a class="pagination-next" onclick="paginate(10)">></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="ml-3 mb-5">
+            <p class="is-size-6" id="outOf"></p>
+        </div>
     </div>
 </body>
 
-<script>
-    let players = [
-    {
-            name: "Magnus Carlsen",
-            id: 1,
-            classicalRating: "2859",
-            rapidRating: "2834",
-            blitzRating: "2830",
-            games: []
-        },
-        {
-            name: "Ding Liren",
-            id: 2,
-            classicalRating: "2811",
-            rapidRating: "2829",
-            blitzRating: "2788",
-            games: []
-        },
-        {
-            name: "Ian Nepomniachtchi",
-            id: 3,
-            classicalRating: "2793",
-            rapidRating: "2766",
-            blitzRating: "2781",
-            games: []
-        },
-        {
-            name: "Alireza Firouzja ",
-            id: 4,
-            classicalRating: "2785",
-            rapidRating: "2745",
-            blitzRating: "2903",
-            games: []
-        },
-        {
-            name: "Hikaru Nakamura",
-            id: 5,
-            classicalRating: "2768",
-            rapidRating: "2806",
-            blitzRating: "2909",
-            games: []
-        },
-        {
-            name: "Fabiano Caruana",
-            id: 6,
-            classicalRating: "2766",
-            rapidRating: "2747",
-            blitzRating: "2847",
-            games: []
-        },
-        {
-            name: "Anish Giri",
-            id: 7,
-            classicalRating: "2764",
-            rapidRating: "2721",
-            blitzRating: "2792",
-            games: []
-        },
-        {
-            name: "Wesley So",
-            id: 7,
-            classicalRating: "2760",
-            rapidRating: "2787",
-            blitzRating: "2763",
-            games: []
-        },
-        {
-            name: "Viswanathan Anand",
-            id: 9,
-            classicalRating: "2754",
-            rapidRating: "2731",
-            blitzRating: "2734",
-            games: []
-        },
-        {
-            name: "Sergey Karjakin",
-            id: 10,
-            classicalRating: "2747",
-            rapidRating: "2736",
-            blitzRating: "2647",
-            games: []
-        },
-        {
-            name: "Teimour Radjabov",
-            id: 11,
-            classicalRating: "2747",
-            rapidRating: "2718",
-            blitzRating: "2709",
-            games: []
-        },
-        {
-            name: "Alexander Grischuk",
-            id: 12,
-            classicalRating: "2745",
-            rapidRating: "2759",
-            blitzRating: "2847",
-            games: []
-        },
-        {
-            name: "Leinier Dominguez Perez",
-            id: 13,
-            classicalRating: "2743",
-            rapidRating: "2703",
-            blitzRating: "2708",
-            games: []
-        },
-        {
-            name: "Shakhiyar Mamedyarov",
-            id: 14,
-            classicalRating: "2741",
-            rapidRating: "2747",
-            blitzRating: "2734",
-            games: []
-        },
-        {
-            name: "Richard Rapport",
-            id: 15,
-            classicalRating: "2740",
-            rapidRating: "2802",
-            blitzRating: "2613",
-            games: []
-        },
-        {
-            name: "Maxime Vachier-Lagrave",
-            id: 16,
-            classicalRating: "2735",
-            rapidRating: "2775",
-            blitzRating: "2771",
-            games: []
-        },
-        {
-            name: "Levon Aronian",
-            id: 17,
-            classicalRating: "2735",
-            rapidRating: "2720",
-            blitzRating: "2809",
-            games: []
-        },
-        {
-            name: "Jan-Krzysztof Duda",
-            id: 18,
-            classicalRating: "2731",
-            rapidRating: "2791",
-            blitzRating: "2779",
-            games: []
-        },
-        {
-            name: "Vidit Santosh Gujrathi",
-            id: 19,
-            classicalRating: "2729",
-            rapidRating: "2617",
-            blitzRating: "2654",
-            games: []
-        },
-        {
-            name: "Dmitry Andreikin",
-            id: 20,
-            classicalRating: "2729",
-            rapidRating: "2634",
-            blitzRating: "2736",
-            games: []
-        }
-    ];
-
-    let playersString = JSON.stringify(players);
-    // let data = localStorage.setItem("data", playersString)
-    let data = JSON.parse(localStorage.getItem("data"))
-
-    if(localStorage.getItem("data")!=playersString){
-        data = JSON.parse(localStorage.getItem("data"))
-    }else{
-        localStorage.setItem("data", playersString);
-        data = JSON.parse(localStorage.getItem("data"));
-    }
-
-    let seenID = ["0"]
-    
-    let seenString = JSON.stringify(seenID);
-    let seen = JSON.parse(localStorage.getItem("seen"))
-
-    if(localStorage.getItem("seen")!=seenString){
-        seen = JSON.parse(localStorage.getItem("seen"))
-    }else{
-        localStorage.setItem("seen", seenString);
-        seen = JSON.parse(localStorage.getItem("seen"));
-    }
-
-    let rankSort = "descending"
-    let classicalSort = "descending";
-    let rapidSort = "descending"
-    let blitzSort = "descending"
-    let nameSort = "descending"
-
-    let page = 10;
-
-    sort('rank', rankSort)
-
-    function paginate(num){
-        page += num
-        if(page<10){
-            page = 10;
-        }else if(page > data.length){
-            page = data.length
-            page = page - page%10
-            page += 10
-        }
-        createTable(data)
-    }
-
-    function createTable(data){
-        let tableBody = document.querySelector('tbody');
-        tableBody.replaceChildren();
-        for(let j = page-10; j<page; j++){
-            const row = document.createElement('tr');
-            let cell = document.createElement('td');
-            let link = document.createElement('a');
-            cellRank = document.createElement('td');
-            cellRank.textContent = j+1;
-            row.appendChild(cellRank);
-            
-            cell = document.createElement('td');
-            link.href = 'players.html?id=' + data[j].id;
-            link.textContent = data[j].name;
-            cell.appendChild(link);
-            row.appendChild(cell);
-            cell = document.createElement('td');
-            cell.textContent = data[j].classicalRating;
-            row.appendChild(cell);
-            cell = document.createElement('td');
-            cell.textContent = data[j].rapidRating;
-            row.appendChild(cell);
-            cell = document.createElement('td');
-            cell.textContent = data[j].blitzRating;
-            row.appendChild(cell);
-            tableBody.appendChild(row);
-        }
-    }
-
-    function sort(prop, sort){
-        let iconRank = document.getElementById("rank")
-        let iconName = document.getElementById("name")
-        let iconClass = document.getElementById("class")
-        let iconRapid = document.getElementById("rapid")
-        let iconBlitz = document.getElementById("blitz")
-        iconRank.setAttribute('class', "")
-        iconName.setAttribute('class', "")
-        iconClass.setAttribute('class', "")
-        iconRapid.setAttribute('class', "")
-        iconBlitz.setAttribute('class', "")
-
-        let tableBody = document.querySelector('tbody');
-        let rankFlag = false
-        if(prop === "rank"){
-            prop = "classicalRating"
-            rankFlag = true
-        }
-        tableBody.replaceChildren();
-        let store = "";
-        if(sort === "descending"){
-            for(let j = 0; j<data.length+5; j++){
-                for(let i = 0; i<data.length-1; i++){
-                    let currentElement = data[i];
-                    let nextElement = data[i+1];
-                    if(prop === 'name'){
-                        iconName.setAttribute('class', "fa-solid fa-chevron-down")
-                        if(currentElement[prop] > nextElement[prop]){
-                            store = currentElement;
-                            data[i] = data[i+1];
-                            data[i+1] = store;
-                        }
-                        nameSort = "ascending"
-                    }else if(parseInt(currentElement[prop]) < parseInt(nextElement[prop])){
-                        store = currentElement;
-                        data[i] = data[i+1];
-                        data[i+1] = store;
-                    }
-                }
-            }
-            if(prop === "classicalRating" && !rankFlag){
-                iconClass.setAttribute('class', "fa-solid fa-chevron-down")
-                classicalSort = "ascending"
-            }else if(prop === "rapidRating" && !rankFlag){
-                iconRapid.setAttribute('class', "fa-solid fa-chevron-down")
-                rapidSort = "ascending"
-            }else if(prop === "blitzRating" && !rankFlag){
-                iconBlitz.setAttribute('class', "fa-solid fa-chevron-down")
-                blitzSort = "ascending"
-            }else if(prop === "classicalRating" && rankFlag){
-                iconRank.setAttribute('class', "fa-solid fa-chevron-down")
-                rankSort = "ascending"
-            }
-        }else if(sort === "ascending"){
-            for(let j = 0; j<data.length+5; j++){
-                for(let i = 0; i<data.length-1; i++){
-                    let currentElement = data[i]
-                    let nextElement = data[i+1];
-                    if(prop === 'name'){
-                        iconName.setAttribute('class', "fa-solid fa-chevron-up")
-                        if(currentElement[prop] < nextElement[prop]){
-                            store = currentElement;
-                            data[i] = data[i+1];
-                            data[i+1] = store;
-                        }
-                        nameSort = "descending"
-                    }else if(parseInt(currentElement[prop]) > parseInt(nextElement[prop])){
-                        store = currentElement;
-                        data[i] = data[i+1];
-                        data[i+1] = store;
-                    }
-                }
-            }
-            if(prop === "classicalRating" && !rankFlag){
-                iconClass.setAttribute('class', "fa-solid fa-chevron-up")
-                classicalSort = "descending"
-            }else if(prop === "rapidRating" && !rankFlag){
-                iconRapid.setAttribute('class', "fa-solid fa-chevron-up")
-                rapidSort = "descending"
-            }else if(prop === "blitzRating" && !rankFlag){
-                iconBlitz.setAttribute('class', "fa-solid fa-chevron-up")
-                blitzSort = "descending"
-            }else if(prop === "classicalRating" && rankFlag){
-                iconRank.setAttribute('class', "fa-solid fa-chevron-up")
-                rankSort = "descending"
-            }
-        }
-        createTable(data);
-    }
-
-</script>
+<script src = "chess.js"></script>
 
 </html>

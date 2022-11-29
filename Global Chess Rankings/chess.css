@@ -1,0 +1,7 @@
+th{
+    cursor: pointer;
+}
+
+table, td, th{
+    width:20%;
+}
