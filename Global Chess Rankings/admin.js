@@ -1,6 +1,8 @@
+// initializes the arrays needed
 let tempData = JSON.parse(localStorage.getItem("data"));
 let tempSeen = JSON.parse(localStorage.getItem("seen"))
 
+// adds dropdown options for every player
 tempData.forEach(player =>{
     let whitePlayer = document.getElementById("whitePlayer")
     let blackPlayer = document.getElementById("blackPlayer")
@@ -16,6 +18,7 @@ tempData.forEach(player =>{
     blackPlayer.appendChild(option2)
 })
 
+// takes inputs from the fields and adds players
 function addPlayer(){
     let firstName = document.querySelector('#pFirstName').value;
     let lastName = document.querySelector('#pLastName').value;
@@ -58,6 +61,7 @@ function addPlayer(){
     }
 }
 
+// takes values from the input and adds every value for a game
 function addGame(){
     let date = document.getElementById('date')
     let dateValue = date.value;

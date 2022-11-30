@@ -1334,7 +1334,7 @@ let players = [
 ];
 
 
-
+// this bit makes sure that if the local storage data is different than the hard-coded data, it doesnt replace the local storage data with the hard-coded data
 let playersString = JSON.stringify(players);
 // let data = localStorage.setItem("data", playersString)
 let data = JSON.parse(localStorage.getItem("data"))
@@ -1372,12 +1372,12 @@ let centerButton = document.getElementById("current")
 let rightButton = document.getElementById("oneAfter")
 let lastButton = document.getElementById("lastButton")
 
+// intial sort of the table and creates and adds functionality to the pagination buttons
 fillPaginationButtons(page)
 sort('rank', rankSort)
 
+// adds content and onclick functions to the pagination buttons
 function fillPaginationButtons(page) {
-    let leftDot = document.getElementById("leftDot")
-    let rightDot = document.getElementById("rightDot")
     let outOf = document.getElementById("outOf")
     let max = data.length - data.length % 10
     max += 10
@@ -1385,6 +1385,7 @@ function fillPaginationButtons(page) {
     num = page / 10;
     lastButton.textContent = max
     lastButton.setAttribute("onclick", "setPaginate('last')")
+    // if the page is the first 10
     if (num == 1) {
         leftButton.textContent = 2
         centerButton.textContent = 3
@@ -1395,6 +1396,7 @@ function fillPaginationButtons(page) {
         rightButton.classList.remove("is-hidden")
         outOf.textContent = "(" + num.toString() + " of " + max.toString() + ")"
     }
+    // if the page is the second 10
     else if (num === 2) {
         leftButton.textContent = 2
         centerButton.textContent = 3
@@ -1404,7 +1406,9 @@ function fillPaginationButtons(page) {
         rightButton.setAttribute("onclick", "setPaginate('right')")
         rightButton.classList.remove("is-hidden")
         outOf.textContent = "(" + num.toString() + " of " + max.toString() + ")"
-    } else if (num >= 3 && page < data.length && num < max - 1) {
+    } 
+    // if the page is the third or higher 10 of data and it isnt the last 2 pages
+    else if (num >= 3 && page < data.length && num < max - 1) {
         leftButton.textContent = num - 1
         centerButton.textContent = num
         rightButton.textContent = num + 1
@@ -1413,7 +1417,9 @@ function fillPaginationButtons(page) {
         rightButton.setAttribute("onclick", "setPaginate('right')")
         rightButton.classList.remove("is-hidden")
         outOf.textContent = "(" + num.toString() + " of " + max.toString() + ")"
-    } else if (num >= max - 1) {
+    } 
+    // if it is the last two pages, it will not change the buttons
+    else if (num >= max - 1) {
         leftButton.setAttribute("onclick", "setPaginate('left')")
         centerButton.setAttribute("onclick", "setPaginate('center')")
         rightButton.setAttribute("onclick", "setPaginate('right')")
@@ -1421,6 +1427,7 @@ function fillPaginationButtons(page) {
     }
 }
 
+// adds or subtracts numbers from page to paginate the table
 function paginate(num) {
     page += num
     if (page < 10) {
@@ -1430,10 +1437,12 @@ function paginate(num) {
         page = page - page % 10
         page += 10
     }
+    // recreates table and reinits the buttons
     createTable(data)
     fillPaginationButtons(page)
 }
 
+// sets the page number to the prop. which is passed in as a string and uses the textContent of each button
 function setPaginate(prop) {
     if (prop === "10") {
         page = 10
@@ -1458,6 +1467,7 @@ function setPaginate(prop) {
     }
 }
 
+// creates table by grabbing values from data
 function createTable(data) {
     let tableBody = document.querySelector('tbody');
     tableBody.replaceChildren();
@@ -1489,6 +1499,7 @@ function createTable(data) {
     }
 }
 
+// sorts according to which property (prop) and in which way (sort)
 function sort(prop, sort) {
     let iconRank = document.getElementById("rank")
     let iconName = document.getElementById("name")

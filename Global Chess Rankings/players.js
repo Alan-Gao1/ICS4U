@@ -1,3 +1,4 @@
+// initializes ALL of the text and everything onto the page
 function start() {
     const dataString = localStorage.getItem('data');
     const data = JSON.parse(dataString);
@@ -6,6 +7,7 @@ function start() {
     const player = playerPre[0]
 
     playerIdentificationInside.innerText = player.name
+    // adds the classification to the title of the page
     let classification = "";
     if(parseInt(player.classicalRating) > 2700){
         classification = "Super Grandmaster"
@@ -26,6 +28,7 @@ function start() {
     }else if(parseInt(player.classicalRating) > 0){
         classification = "Bad Player"
     }
+    // adds the different ratings to the levels item in the html
     playerSubtitle.innerText = classification
     classicalTitle.innerText = player.classicalRating
     rapidTitle.innerText = player.rapidRating
@@ -33,6 +36,7 @@ function start() {
 
     let boxDiv = document.getElementById('boxDiv')
 
+    // notification if the player has no games
     if(player.games.length === 0){
         let notif = document.createElement('div')
         notif.classList.add("notification")
@@ -45,10 +49,12 @@ function start() {
         boxDiv.appendChild(notif)
     }else{
         player.games.forEach(thisGame => {
+            // creates a column for the cards
             let thisColumn = document.createElement('div')
             thisColumn.classList.add("column")
             thisColumn.classList.add("is-half")
 
+            // makes card, header, and the header of the card text
             let thisCard = document.createElement('div')
             thisCard.classList.add("card")
 
@@ -65,6 +71,7 @@ function start() {
             thisCardHeader.appendChild(headerText);
             thisCard.appendChild(thisCardHeader)
 
+            // creates the info columns as part of the card content and makes them functional with all the information from thisGame
             let cardContent = document.createElement('div')
             cardContent.classList.add("card-content")
 
@@ -99,6 +106,7 @@ function start() {
             finalDis = dateConvert(thisYear) + " " +thisDate.substring(8) + ", " + thisDate.substring(0,4)
             dateColumn.textContent = finalDis
 
+            // adds winner of each game to the info columns and a font awesome icon before and after each
             if(thisGame.winner === "1"){
                 let spanA = document.createElement("span")
                 spanA.classList.add("icon")
@@ -248,6 +256,8 @@ function start() {
 
             let tbody = document.createElement("tbody")
 
+            // uses recursive functions for every item to load and add the properties from data into a table
+
             tbody.appendChild(createRow(createCell(thisGame.brilliantW, "right"),createCell("Brilliant", "mid"),createCell(thisGame.brilliantB, "left")))
 
             tbody.appendChild(createRow(createCell(thisGame.greatW, "right"),createCell("Great", "mid"),createCell(thisGame.greatB, "left")))
@@ -282,6 +292,7 @@ function start() {
     }
 }
 
+// function to create a row with the cell for the white middle and right cells
 function createRow(white, middle, right){
     let tr = document.createElement("tr")
     tr.appendChild(white)
@@ -290,6 +301,7 @@ function createRow(white, middle, right){
     return tr;
 }
 
+// creates a cell with the align setting and text to be added
 function createCell(text, align){
     let th = document.createElement("th")
     th.classList.add("has-text-weight-normal")
@@ -305,6 +317,7 @@ function createCell(text, align){
     return th
 }
 
+// converts the month date numbers into month names
 function dateConvert(num){
     if(num === "01"){
         return "January"

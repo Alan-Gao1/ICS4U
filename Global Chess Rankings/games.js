@@ -1,8 +1,10 @@
 let data = JSON.parse(localStorage.getItem("data"));
 let tempSeen = JSON.parse(localStorage.getItem("seen"))
 
+// makes the table of games
 createTable()
 
+// adds a link to the table for each player
 function addLink(thisGame, nameString, link){
     data.forEach(player =>{
         if(player.name === nameString){
@@ -12,6 +14,7 @@ function addLink(thisGame, nameString, link){
     })
 }
 
+// creates the table with all the information from data
 function createTable(){
     let tableBody = document.querySelector('tbody')
     let addedID = ["0"]
@@ -20,6 +23,7 @@ function createTable(){
             for(let i = 0; i<player.games.length; i++){
                 let thisGame = player.games[i]
                 let flag = false;
+                // checks to see if a game with the same id has already been added, if it has, skip adding it
                 for(let i = 0; i<addedID.length; i++){
                     if(addedID[i] === thisGame.id){
                         flag = true;
@@ -77,7 +81,7 @@ function createTable(){
     });
 }
 
-
+// filters the results of the table by date, including validation
 function dateFilter(){
     let dateFromUN = document.getElementById('dateFrom').value
     let dateToUN = document.getElementById('dateTo').value
@@ -101,6 +105,7 @@ function dateFilter(){
                 let currentDate = new Date(currentDateSlash)
                 if(currentDate>=dateFrom){
                     if(currentDate<=dateTo){
+                        // recreates table only if the filter is valid and has objects within them
                         let flag = false;
                         for(let i = 0; i<addedID.length; i++){
                             if(addedID[i] === thisGame.id){
@@ -157,6 +162,7 @@ function dateFilter(){
             })
         }
     });
+    // displays errors if the date filter is invalid or has no dates
     if(tableBody.childElementCount == 0){
         let notif = document.getElementById("invalid")
         notif.classList.remove("is-hidden")
