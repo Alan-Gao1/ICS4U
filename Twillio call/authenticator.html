@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+    <input type="text" id="to" placeholder="Message to:" class="input">
+    <input type="text" id="body" placeholder="Body" class="input">
+    <button class="button is-primary" onclick="replace()">Submit</button>
+</body>
+
+<script>
+    let to = ""
+    let body = ""
+
+    function replace(){
+        to = document.getElementById("to").value
+        body = document.getElementById("body").value
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Basic QUNmNjg3ZjU1NjhhYzczMjZkYjZlNzNkMWI3NGQ4MmJlNzo3OWUwMDk2MzM4ZGY1MTUwOThiYWUxNjVlMDRhZDcxMg==");
+        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+        var urlencoded = new URLSearchParams();
+        urlencoded.append("To", to);
+        urlencoded.append("From", "+13867038489");
+        urlencoded.append("Body", body);
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: 'follow'
+        };
+
+        fetch("https://api.twilio.com/2010-04-01/Accounts/ACf687f5568ac7326db6e73d1b74d82be7/Messages.json", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+    }
+</script>
+
+</html>
