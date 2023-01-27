@@ -8,24 +8,20 @@ public class TestLinkedList {
       } else {
          testPassed++;
       }
-
       if (!testRemoveNodes()) {
          System.out.println("Test Failed: testRemoveNodes");
          testFailed++;
       } else {
          testPassed++;
       }
-
       if (!testGetNodes()) {
          System.out.println("Test Failed: testGetNodes");
          testFailed++;
       } else {
          testPassed++;
       }
-
       System.out.println("Tests Passed: " + testPassed + ". Tests Failed: " + testFailed);
    }
-
    private static IntLinkedList prepareLinkedList() {
       IntLinkedList list = new IntLinkedList();
       list.add(1);
@@ -36,7 +32,6 @@ public class TestLinkedList {
 
       return list;
    }
-
    private static boolean testGetNodes() {
       IntLinkedList list = prepareLinkedList();
 
@@ -69,7 +64,6 @@ public class TestLinkedList {
       return true;
 
    }
-
    private static boolean testRemoveNodes() {
       IntLinkedList list = new IntLinkedList();
       Integer temp = list.remove(6);
@@ -104,7 +98,6 @@ public class TestLinkedList {
 
       return true;
    }
-
    private static boolean testAddNodes() {
       IntLinkedList list = prepareLinkedList();
 
@@ -131,5 +124,4 @@ public class TestLinkedList {
 
       return true;
    }
-
 }
