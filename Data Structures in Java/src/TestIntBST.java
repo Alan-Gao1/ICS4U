@@ -11,5 +11,9 @@ public class TestIntBST {
         bst.add(11);
         
         bst.preOrderPrintTraversal();
+        System.out.println("-----------");
+        bst.postOrderPrintTraversal();
+        System.out.println("-----------");
+        bst.inOrderPrintTraversal();
     }
 }
